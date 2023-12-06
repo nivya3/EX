@@ -38,6 +38,7 @@ import {
   InteractiveCanvasAppState,
 } from "../types";
 import { getDefaultAppState } from "../appState";
+import { getSubtypeMethods } from "../element/subtypes";
 import {
   BOUND_TEXT_PADDING,
   FRAME_STYLE,
@@ -271,6 +272,12 @@ const drawElementOnCanvas = (
 ) => {
   context.globalAlpha =
     ((getContainingFrame(element)?.opacity ?? 100) * element.opacity) / 10000;
+  const map = getSubtypeMethods(element.subtype);
+  if (map?.render) {
+    map.render(element, context);
+    context.globalAlpha = 1;
+    return;
+  }
   switch (element.type) {
     case "rectangle":
     case "iframe":
@@ -916,6 +923,12 @@ export const renderElementToSvg = (
     }
     root.appendChild(node);
   };
+
+  const map = getSubtypeMethods(element.subtype);
+  if (map?.renderSvg) {
+    map.renderSvg(svgRoot, addToRoot, element, { offsetX, offsetY });
+    return;
+  }
 
   const opacity =
     ((getContainingFrame(element)?.opacity ?? 100) * element.opacity) / 10000;

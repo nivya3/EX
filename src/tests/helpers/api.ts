@@ -19,6 +19,15 @@ import util from "util";
 import path from "path";
 import { getMimeType } from "../../data/blob";
 import {
+  SubtypeLoadedCb,
+  SubtypePrepFn,
+  SubtypeRecord,
+  checkRefreshOnSubtypeLoad,
+  prepareSubtype,
+  selectSubtype,
+} from "../../element/subtypes";
+import {
+  maybeGetSubtypeProps,
   newEmbeddableElement,
   newFrameElement,
   newFreeDrawElement,
@@ -37,6 +46,19 @@ const readFile = util.promisify(fs.readFile);
 const { h } = window;
 
 export class API {
+  static addSubtype = (record: SubtypeRecord, subtypePrepFn: SubtypePrepFn) => {
+    const subtypeLoadedCb: SubtypeLoadedCb = (hasSubtype) => {
+      if (checkRefreshOnSubtypeLoad(hasSubtype, h.elements)) {
+        h.app.refresh();
+      }
+    };
+    const prep = prepareSubtype(record, subtypePrepFn, subtypeLoadedCb);
+    if (prep.actions) {
+      h.app.actionManager.registerAll(prep.actions);
+    }
+    return prep;
+  };
+
   static setSelectedElements = (elements: ExcalidrawElement[]) => {
     h.setState({
       selectedElementIds: elements.reduce((acc, element) => {
@@ -118,6 +140,8 @@ export class API {
     verticalAlign?: T extends "text"
       ? ExcalidrawTextElement["verticalAlign"]
       : never;
+    subtype?: ExcalidrawElement["subtype"];
+    customData?: ExcalidrawElement["customData"];
     boundElements?: ExcalidrawGenericElement["boundElements"];
     containerId?: T extends "text"
       ? ExcalidrawTextElement["containerId"]
@@ -150,6 +174,14 @@ export class API {
 
     const appState = h?.state || getDefaultAppState();
 
+    const custom = maybeGetSubtypeProps(
+      {
+        subtype: rest.subtype ?? selectSubtype(appState, type)?.subtype,
+        customData:
+          rest.customData ?? selectSubtype(appState, type)?.customData,
+      },
+      type,
+    );
     const base: Omit<
       ExcalidrawGenericElement,
       | "id"
@@ -164,6 +196,7 @@ export class API {
       | "link"
       | "updated"
     > = {
+      ...custom,
       x,
       y,
       frameId: rest.frameId ?? null,

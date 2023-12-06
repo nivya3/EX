@@ -284,6 +284,16 @@ import LayerUI from "./LayerUI";
 import { Toast } from "./Toast";
 import { actionToggleViewMode } from "../actions/actionToggleViewMode";
 import {
+  SubtypeLoadedCb,
+  SubtypeRecord,
+  SubtypePrepFn,
+  checkRefreshOnSubtypeLoad,
+  isSubtypeAction,
+  prepareSubtype,
+  selectSubtype,
+  subtypeActionPredicate,
+} from "../element/subtypes";
+import {
   dataURLToFile,
   generateIdFromFile,
   getDataURL,
@@ -611,6 +621,7 @@ class App extends React.Component<AppProps, AppState> {
         registerAction: (action: Action) => {
           this.actionManager.registerAction(action);
         },
+        addSubtype: this.addSubtype,
         refresh: this.refresh,
         setToast: this.setToast,
         id: this.id,
@@ -644,6 +655,19 @@ class App extends React.Component<AppProps, AppState> {
 
     this.actionManager.registerAction(createUndoAction(this.history));
     this.actionManager.registerAction(createRedoAction(this.history));
+    this.actionManager.registerActionPredicate(subtypeActionPredicate);
+  }
+
+  private addSubtype(record: SubtypeRecord, subtypePrepFn: SubtypePrepFn) {
+    const subtypeLoadedCb: SubtypeLoadedCb = (hasSubtype) => {
+      const elements = this.getSceneElementsIncludingDeleted();
+      // If there are any elements of the just-registered subtype,
+      // refresh the scene to re-render each such element.
+      if (checkRefreshOnSubtypeLoad(hasSubtype, elements)) {
+        this.refresh();
+      }
+    };
+    return prepareSubtype(record, subtypePrepFn, subtypeLoadedCb);
   }
 
   private onWindowMessage(event: MessageEvent) {
@@ -2820,7 +2844,7 @@ class App extends React.Component<AppProps, AppState> {
       // (something something security)
       let file = event?.clipboardData?.files[0];
 
-      const data = await parseClipboard(event, isPlainPaste);
+      const data = await parseClipboard(event, isPlainPaste, this.state);
       if (!file && !isPlainPaste) {
         if (data.mixedContent) {
           return this.addElementsFromMixedContentPaste(data.mixedContent, {
@@ -3143,6 +3167,7 @@ class App extends React.Component<AppProps, AppState> {
       fontFamily: this.state.currentItemFontFamily,
       textAlign: this.state.currentItemTextAlign,
       verticalAlign: DEFAULT_VERTICAL_ALIGN,
+      ...selectSubtype(this.state, "text"),
       locked: false,
     };
 
@@ -4328,6 +4353,7 @@ class App extends React.Component<AppProps, AppState> {
           verticalAlign: parentCenterPosition
             ? VERTICAL_ALIGN.MIDDLE
             : DEFAULT_VERTICAL_ALIGN,
+          ...selectSubtype(this.state, "text"),
           containerId: shouldBindToContainer ? container?.id : undefined,
           groupIds: container?.groupIds ?? [],
           lineHeight,
@@ -6288,6 +6314,7 @@ class App extends React.Component<AppProps, AppState> {
       roughness: this.state.currentItemRoughness,
       roundness: null,
       opacity: this.state.currentItemOpacity,
+      ...selectSubtype(this.state, "image"),
       locked: false,
       frameId: topLayerFrame ? topLayerFrame.id : null,
     });
@@ -6388,6 +6415,7 @@ class App extends React.Component<AppProps, AppState> {
             : null,
         startArrowhead,
         endArrowhead,
+        ...selectSubtype(this.state, elementType),
         locked: false,
         frameId: topLayerFrame ? topLayerFrame.id : null,
       });
@@ -6467,6 +6495,7 @@ class App extends React.Component<AppProps, AppState> {
       roughness: this.state.currentItemRoughness,
       opacity: this.state.currentItemOpacity,
       roundness: this.getCurrentItemRoundness(elementType),
+      ...selectSubtype(this.state, elementType),
       locked: false,
       frameId: topLayerFrame ? topLayerFrame.id : null,
     } as const;
@@ -8946,6 +8975,39 @@ class App extends React.Component<AppProps, AppState> {
 
       const elementsToHighlight = new Set<ExcalidrawElement>();
       selectedFrames.forEach((frame) => {
+        const elementsInFrame = getFrameChildren(
+          this.scene.getNonDeletedElements(),
+          frame.id,
+        );
+
+        // keep elements' positions relative to their frames on frames resizing
+        if (transformHandleType) {
+          if (transformHandleType.includes("w")) {
+            elementsInFrame.forEach((element) => {
+              mutateElement(element, {
+                x:
+                  frame.x +
+                  (frameElementsOffsetsMap.get(frame.id + element.id)?.x || 0),
+                y:
+                  frame.y +
+                  (frameElementsOffsetsMap.get(frame.id + element.id)?.y || 0),
+              });
+            });
+          }
+          if (transformHandleType.includes("n")) {
+            elementsInFrame.forEach((element) => {
+              mutateElement(element, {
+                x:
+                  frame.x +
+                  (frameElementsOffsetsMap.get(frame.id + element.id)?.x || 0),
+                y:
+                  frame.y +
+                  (frameElementsOffsetsMap.get(frame.id + element.id)?.y || 0),
+              });
+            });
+          }
+        }
+
         getElementsInResizingFrame(
           this.scene.getNonDeletedElements(),
           frame,
@@ -8963,6 +9025,29 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   private getContextMenuItems = (
+    type: "canvas" | "element",
+  ): ContextMenuItems => {
+    const subtype: ContextMenuItems = [];
+    this.actionManager
+      .filterActions(isSubtypeAction)
+      .forEach(
+        (action) =>
+          this.actionManager.isActionEnabled(action, { data: {} }) &&
+          subtype.push(action),
+      );
+    if (subtype.length > 0) {
+      subtype.push(CONTEXT_MENU_SEPARATOR);
+    }
+    const standard: ContextMenuItems = this._getContextMenuItems(type).filter(
+      (item) =>
+        !item ||
+        item === CONTEXT_MENU_SEPARATOR ||
+        this.actionManager.isActionEnabled(item, { noPredicates: true }),
+    );
+    return [...subtype, ...standard];
+  };
+
+  private _getContextMenuItems = (
     type: "canvas" | "element",
   ): ContextMenuItems => {
     const options: ContextMenuItems = [];
