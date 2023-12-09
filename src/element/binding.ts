@@ -516,7 +516,7 @@ const getElligibleElementForBindingElement = (
   );
 };
 
-const getLinearElementEdgeCoors = (
+export const getLinearElementEdgeCoors = (
   linearElement: NonDeleted<ExcalidrawLinearElement>,
   startOrEnd: "start" | "end",
 ): { x: number; y: number } => {
