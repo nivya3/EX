@@ -2,7 +2,7 @@ import oc from "open-color";
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { trackEvent } from "../analytics";
 import { ChartElements, renderSpreadsheet, Spreadsheet } from "../charts";
-import { ChartType } from "../element/types";
+import { ChartType, ElementsMap } from "../element/types";
 import { t } from "../i18n";
 import { exportToSvg } from "../scene/export";
 import { UIAppState } from "../types";
@@ -10,6 +10,12 @@ import { useApp } from "./App";
 import { Dialog } from "./Dialog";
 
 import "./PasteChartDialog.scss";
+import { ensureSubtypesLoaded } from "../element/subtypes";
+import { isTextElement } from "../element";
+import {
+  getContainerElement,
+  redrawTextBoundingBox,
+} from "../element/textElement";
 
 type OnInsertChart = (chartType: ChartType, elements: ChartElements) => void;
 
@@ -25,41 +31,60 @@ const ChartPreviewBtn = (props: {
   );
 
   useLayoutEffect(() => {
-    if (!props.spreadsheet) {
-      return;
-    }
-
-    const elements = renderSpreadsheet(
-      props.chartType,
-      props.spreadsheet,
-      0,
-      0,
-    );
-    setChartElements(elements);
     let svg: SVGSVGElement;
     const previewNode = previewRef.current!;
-
     (async () => {
-      svg = await exportToSvg(
-        elements,
-        {
-          exportBackground: false,
-          viewBackgroundColor: oc.white,
-        },
-        null, // files
-      );
-      svg.querySelector(".style-fonts")?.remove();
-      previewNode.replaceChildren();
-      previewNode.appendChild(svg);
+      (async () => {
+        let elements: ChartElements;
+        await ensureSubtypesLoaded(
+          props.spreadsheet?.activeSubtypes ?? [],
+          () => {
+            if (!props.spreadsheet) {
+              return;
+            }
 
-      if (props.selected) {
-        (previewNode.parentNode as HTMLDivElement).focus();
-      }
+            elements = renderSpreadsheet(
+              props.chartType,
+              props.spreadsheet,
+              0,
+              0,
+            );
+            const elementsMap = new Map() as ElementsMap;
+            for (const element of elements) {
+              if (!element.isDeleted) {
+                elementsMap.set(element.id, element);
+              }
+            }
+            elements.forEach(
+              (el) =>
+                isTextElement(el) &&
+                redrawTextBoundingBox(el, getContainerElement(el, elementsMap)),
+            );
+            setChartElements(elements);
+          },
+        ).then(async () => {
+          svg = await exportToSvg(
+            elements,
+            {
+              exportBackground: false,
+              viewBackgroundColor: oc.white,
+            },
+            null, // files
+          );
+          svg.querySelector(".style-fonts")?.remove();
+          previewNode.replaceChildren();
+          previewNode.appendChild(svg);
+
+          if (props.selected) {
+            (previewNode.parentNode as HTMLDivElement).focus();
+          }
+        });
+      })();
+
+      return () => {
+        previewNode.replaceChildren();
+      };
     })();
-
-    return () => {
-      previewNode.replaceChildren();
-    };
   }, [props.spreadsheet, props.chartType, props.selected]);
 
   return (

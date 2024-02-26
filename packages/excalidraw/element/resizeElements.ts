@@ -52,7 +52,7 @@ import {
   handleBindTextResize,
   getBoundTextMaxWidth,
   getApproxMinLineHeight,
-  measureText,
+  measureTextElement,
   getBoundTextMaxHeight,
 } from "./textElement";
 import { LinearElementEditor } from "./linearElementEditor";
@@ -229,11 +229,7 @@ const measureFontSizeFromWidth = (
   if (nextFontSize < MIN_FONT_SIZE) {
     return null;
   }
-  const metrics = measureText(
-    element.text,
-    getFontString({ fontSize: nextFontSize, fontFamily: element.fontFamily }),
-    element.lineHeight,
-  );
+  const metrics = measureTextElement(element, { fontSize: nextFontSize });
   return {
     size: nextFontSize,
     baseline: metrics.baseline + (nextHeight - metrics.height),

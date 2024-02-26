@@ -60,6 +60,7 @@ import "./Toolbar.scss";
 import { mutateElement } from "../element/mutateElement";
 import { ShapeCache } from "../scene/ShapeCache";
 import Scene from "../scene/Scene";
+import { SubtypeToggles } from "./Subtypes";
 import { LaserPointerButton } from "./LaserPointerButton";
 import { MagicSettings } from "./MagicSettings";
 import { TTDDialog } from "./TTDDialog/TTDDialog";
@@ -305,6 +306,7 @@ const LayerUI = ({
                           />
                         </Stack.Row>
                       </Island>
+                      <SubtypeToggles />
                       {isCollaborating && (
                         <Island
                           style={{
