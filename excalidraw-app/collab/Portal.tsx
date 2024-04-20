@@ -37,9 +37,17 @@ class Portal {
     this.roomId = id;
     this.roomKey = key;
 
+    this.socket.on("connect", () => {
+      console.log("connect");
+    });
+
+    console.log("subbing to init-room");
+
     // Initialize socket listeners
     this.socket.on("init-room", () => {
+      console.log("init-room (1)");
       if (this.socket) {
+        console.log("init-room (2)");
         this.socket.emit("join-room", this.roomId);
         trackEvent("share", "room joined");
       }
@@ -52,6 +60,7 @@ class Portal {
       );
     });
     this.socket.on("room-user-change", (clients: SocketId[]) => {
+      console.log("room-user-change", clients);
       this.collab.setCollaborators(clients);
     });
 
