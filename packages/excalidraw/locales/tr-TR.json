@@ -21,7 +21,9 @@
     "copyStyles": "Stilleri kopyala",
     "pasteStyles": "Stilleri yapıştır",
     "stroke": "Vurgu",
+    "changeStroke": "",
     "background": "Arka plan",
+    "changeBackground": "",
     "fill": "Doldur",
     "strokeWidth": "Kontur genişliği",
     "strokeStyle": "Kontur stili",
@@ -48,7 +50,7 @@
     "fontFamily": "Yazı tipi ailesi",
     "addWatermark": "\"Excalidraw ile yapıldı\" yazısını ekle",
     "handDrawn": "El-yazısı",
-    "normal": "Normal",
+    "normal": "",
     "code": "Kod",
     "small": "Küçük",
     "medium": "Orta",
@@ -72,6 +74,7 @@
     "canvasColors": "Tuvalin üzerinde kullanıldı",
     "canvasBackground": "Tuval arka planı",
     "drawingCanvas": "Çizim tuvali",
+    "clearCanvas": "",
     "layers": "Katmanlar",
     "actions": "Eylemler",
     "language": "Dil",
@@ -84,12 +87,13 @@
     "group": "Seçimi grup yap",
     "ungroup": "Seçilen grubu dağıt",
     "collaborators": "Ortaklar",
-    "showGrid": "Izgarayı göster",
+    "toggleGrid": "",
     "addToLibrary": "Kütüphaneye ekle",
     "removeFromLibrary": "Kütüphaneden kaldır",
     "libraryLoadingMessage": "Kütüphane yükleniyor…",
     "libraries": "Kütüphanelere gözat",
     "loadingScene": "Sahne yükleniyor…",
+    "loadScene": "",
     "align": "Hizala",
     "alignTop": "Yukarı hizala",
     "alignBottom": "Aşağı hizala",
@@ -105,7 +109,8 @@
     "share": "Paylaş",
     "showStroke": "Kontur için renk seçiciyi göster",
     "showBackground": "Arkaplan için renk seçiciyi göster",
-    "toggleTheme": "Temayı etkinleştir/devre dışı bırak",
+    "toggleTheme": "",
+    "theme": "",
     "personalLib": "Kişisel Kitaplık",
     "excalidrawLib": "Excalidraw Kitaplığı",
     "decreaseFontSize": "Yazı Tipi Boyutunu Küçült",
@@ -138,7 +143,12 @@
     "removeAllElementsFromFrame": "Çerçevedeki tüm bileşenleri sil",
     "eyeDropper": "Tuvalden renk seç",
     "textToDiagram": "",
-    "prompt": ""
+    "prompt": "",
+    "followUs": "",
+    "discordChat": "",
+    "zoomToFitViewport": "",
+    "zoomToFitSelection": "",
+    "zoomToFit": ""
   },
   "library": {
     "noItems": "Öğe eklenmedi...",
@@ -171,6 +181,7 @@
     "fullScreen": "Tam ekran",
     "darkMode": "Koyu tema",
     "lightMode": "Açık tema",
+    "systemMode": "",
     "zenMode": "Zen modu",
     "objectsSnapMode": "Nesnelere hizala",
     "exitZenMode": "Zen modundan çık",
@@ -212,9 +223,9 @@
     "fileTooBig": "Dosya çok büyük. İzin verilen maksimum boyut {{maxSize}}.",
     "svgImageInsertError": "SVG resmi eklenemedi. SVG işaretlemesi geçersiz görünüyor.",
     "failedToFetchImage": "",
-    "invalidSVGString": "Geçersiz SVG.",
     "cannotResolveCollabServer": "İş birliği sunucusuna bağlanılamıyor. Lütfen sayfayı yenileyip tekrar deneyin.",
     "importLibraryError": "Kütüphane yüklenemedi",
+    "saveLibraryError": "",
     "collabSaveFailed": "Backend veritabanına kaydedilemedi. Eğer problem devam ederse, çalışmanızı korumak için dosyayı yerel olarak kaydetmelisiniz.",
     "collabSaveFailed_sizeExceeded": "Backend veritabanına kaydedilemedi; tuval çok büyük. Çalışmanızı korumak için dosyayı yerel olarak kaydetmelisiniz.",
     "imageToolNotSupported": "",
@@ -246,7 +257,7 @@
     "library": "Kütüphane",
     "lock": "Seçilen aracı çizimden sonra aktif tut",
     "penMode": "Kalem modu - dokunmayı engelle",
-    "link": "Seçilen şekil için bağlantı Ekle/Güncelle",
+    "link": "",
     "eraser": "Silgi",
     "frame": "Çerçeve aracı",
     "magicframe": "",
@@ -299,9 +310,12 @@
     "openIssueMessage": "Sahne bilginizi hata mesajına yansıtmamak için oldukça dikkatli davrandık. Eğer sahneniz gizli değilse hatayı lütfen şuradan takip edin <button>hata takibi.</button> Lütfen aşağıya GitHub sorununa kopyalayarak ve yapıştırarak bilgi ekleyin.",
     "sceneContent": "Sahne içeriği:"
   },
+  "shareDialog": {
+    "or": ""
+  },
   "roomDialog": {
-    "desc_intro": "Çalışma alanınıza, sizinle birlikte çalışabilmeleri için başkalarını da ekleyebilirsiniz.",
-    "desc_privacy": "Çalışma ortamında yaptıklarınız ve çizimleriniz uçtan uca şifrelemeyle saklanmaktadır. Sunucularımız dahi bu verileri şifrelenmemiş haliyle göremez.",
+    "desc_intro": "",
+    "desc_privacy": "",
     "button_startSession": "Oturumu başlat",
     "button_stopSession": "Oturumu sonlandır",
     "desc_inProgressIntro": "Ortak çalışma ortamı oluşturuldu.",
@@ -410,8 +424,8 @@
       "copyPngToClipboard": ""
     },
     "button": {
-      "exportToPng": "PNG",
-      "exportToSvg": "SVG",
+      "exportToPng": "",
+      "exportToSvg": "",
       "copyPngToClipboard": "Panoya kopyala"
     }
   },
@@ -521,5 +535,33 @@
     "description": "",
     "syntax": "",
     "preview": ""
+  },
+  "userList": {
+    "search": {
+      "placeholder": "",
+      "empty": ""
+    },
+    "hint": {
+      "text": "",
+      "followStatus": "",
+      "inCall": "",
+      "micMuted": "",
+      "isSpeaking": ""
+    }
+  },
+  "commandPalette": {
+    "title": "",
+    "shortcuts": {
+      "select": "",
+      "confirm": "",
+      "close": ""
+    },
+    "recents": "",
+    "search": {
+      "placeholder": "",
+      "noMatch": ""
+    },
+    "itemNotAvailable": "",
+    "shortcutHint": ""
   }
 }

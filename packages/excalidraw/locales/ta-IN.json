@@ -21,7 +21,9 @@
     "copyStyles": "ஒயில்களை நகலெடு",
     "pasteStyles": "ஒயில்களை ஒட்டு",
     "stroke": "கீறல்",
+    "changeStroke": "",
     "background": "பின்புலம்",
+    "changeBackground": "",
     "fill": "நிரப்பல்",
     "strokeWidth": "கீறல் அகலம்",
     "strokeStyle": "கீறல் ஒயில்",
@@ -72,6 +74,7 @@
     "canvasColors": "கித்தானில் பயன்படுத்தப்பட்டது",
     "canvasBackground": "கித்தான் பின்னணி",
     "drawingCanvas": "கித்தான் வரைகிறது",
+    "clearCanvas": "",
     "layers": "அடுக்குகள்",
     "actions": "செயல்கள்",
     "language": "மொழி",
@@ -84,12 +87,13 @@
     "group": "தேர்ந்ததை ஒன்றிணை",
     "ungroup": "தேர்ந்ததைப் பிரி",
     "collaborators": "கூட்டுப்பணியினர்",
-    "showGrid": "கட்டதைக் காட்டு",
+    "toggleGrid": "",
     "addToLibrary": "நூலகத்தில் சேர்",
     "removeFromLibrary": "நூலகத்திலிருந்து நீக்கு",
     "libraryLoadingMessage": "நூலகத்தை ஏற்றுகிறது…",
     "libraries": "நூலகங்களை உலாவு",
     "loadingScene": "காட்சியை ஏற்றுகிறது…",
+    "loadScene": "",
     "align": "சீரமை",
     "alignTop": "மேலே சீரமை",
     "alignBottom": "கீழே சீரமை",
@@ -105,7 +109,8 @@
     "share": "பகிர்",
     "showStroke": "கீறல் நிற எடுப்பானைக் காட்டு",
     "showBackground": "பின்னணி நிற எடுப்பானைக் காட்டு",
-    "toggleTheme": "தோற்றத்தை நிலைமாற்று",
+    "toggleTheme": "",
+    "theme": "",
     "personalLib": "தனக்குரிய நூலகம்",
     "excalidrawLib": "எக்ஸ்கேலிட்ரா நூலகம்",
     "decreaseFontSize": "எழுத்துரு அளவைக் குறை",
@@ -138,7 +143,12 @@
     "removeAllElementsFromFrame": "",
     "eyeDropper": "கித்தானிலிருந்து நிறம் தேர்ந்தெடு",
     "textToDiagram": "",
-    "prompt": ""
+    "prompt": "",
+    "followUs": "",
+    "discordChat": "",
+    "zoomToFitViewport": "",
+    "zoomToFitSelection": "",
+    "zoomToFit": ""
   },
   "library": {
     "noItems": "இதுவரை உருப்படிகள் சேரக்கப்படவில்லை...",
@@ -171,6 +181,7 @@
     "fullScreen": "முழுத் திரை",
     "darkMode": "கருமை பயன்முறை",
     "lightMode": "வெளிர்ந்த பயன்முறை",
+    "systemMode": "",
     "zenMode": "ஜென் பயன்முறை",
     "objectsSnapMode": "",
     "exitZenMode": "ஜென் பயன்முறையை விலகு",
@@ -212,9 +223,9 @@
     "fileTooBig": "கோப்பு மிகப்பெரிது. அனுமதிக்கப்பட்ட அதிகபட்ச அளவு {{maxSize}}.",
     "svgImageInsertError": "எஸ்விஜி படத்தைப் புகுத்தவியலா. எஸ்விஜியின் மார்க்அப் செல்லாததாக தெரிகிறது.",
     "failedToFetchImage": "",
-    "invalidSVGString": "செல்லாத SVG.",
     "cannotResolveCollabServer": "கூட்டுப்பணிச் சேவையகத்துடன் இணைக்க முடியவில்லை. பக்கத்தை மீளேற்றி மீண்டும் முயலவும்.",
     "importLibraryError": "நூலகத்தை ஏற்ற முடியவில்லை",
+    "saveLibraryError": "",
     "collabSaveFailed": "பின்முனை தரவுத்தளத்தில் சேமிக்க முடியவில்லை. சிக்கல்கள் நீடித்தால், உமது வேலைகளை இழக்காமலிருப்பதை உறுதிசெய்ய உமது கோப்பை உள்ளகத்தில் சேமிக்க வேண்டும்.",
     "collabSaveFailed_sizeExceeded": "பின்முனை தரவுத்தளத்தில் சேமிக்க முடியவில்லை, கித்தான் மிகப்பெரிதாகத் தெரிகிறது. உமது வேலைகளை இழக்காமலிருப்பதை உறுதிசெய்ய உமது கோப்பை உள்ளகத்தில் சேமிக்க வேண்டும்.",
     "imageToolNotSupported": "",
@@ -246,7 +257,7 @@
     "library": "நூலகம்",
     "lock": "தேர்ந்த கருவியை வரைந்த பின்பும் வைத்திரு",
     "penMode": "பேனா - தடுப்பு தொடுதல்",
-    "link": "தேர்தெடுத்த வடிவத்திற்குத் தொடுப்பைச் சேர்/ புதுப்பி",
+    "link": "",
     "eraser": "அழிப்பி",
     "frame": "சட்டகம் கருவி",
     "magicframe": "",
@@ -299,9 +310,12 @@
     "openIssueMessage": "பிழையில் உம் காட்சி தகவலை உள்ளடக்காமலிருக்க நாங்கள் மிக எச்சரிக்கையாக இருந்தோம். உம் காட்சி தனிப்பட்டதில்லையெனில், பின்தொடர்வதற்கு பரிசீலிக்கவும் எங்கள் <button>பிழை தடமி.</button> கீழுள்ள தகவலை நகலெடுத்து ஒட்டி GitHub சிக்கலுள் உள்ளடக்கவும்.",
     "sceneContent": "காட்சி உள்ளடக்கம்:"
   },
+  "shareDialog": {
+    "or": ""
+  },
   "roomDialog": {
-    "desc_intro": "உம்முடன் கூட்டுப்பணிசெய்ய மக்களை தற்போதைய காட்சிக்கு அழைப்பிடலாம்.",
-    "desc_privacy": "வருந்தாதீர், அமர்வு இருமுனை மறையகத்தைப் பயன்படுத்துகிறது, ஆக நீங்கள் வரைவது எதுவும் தனிப்பட்டதாக இருக்கும். எங்கள் சேவையகத்தால் கூட நீங்கள் என்ன செய்ததைப் பார்க்கவியலாது.",
+    "desc_intro": "",
+    "desc_privacy": "",
     "button_startSession": "அமர்வைத் துவக்கு",
     "button_stopSession": "அமர்வை நிறுத்து",
     "desc_inProgressIntro": "நேரடி-கூட்டுப்பணி அமர்வு தற்போது செயலிலுள்ளது.",
@@ -410,8 +424,8 @@
       "copyPngToClipboard": ""
     },
     "button": {
-      "exportToPng": "PNG",
-      "exportToSvg": "SVG",
+      "exportToPng": "",
+      "exportToSvg": "",
       "copyPngToClipboard": ""
     }
   },
@@ -521,5 +535,33 @@
     "description": "",
     "syntax": "",
     "preview": ""
+  },
+  "userList": {
+    "search": {
+      "placeholder": "",
+      "empty": ""
+    },
+    "hint": {
+      "text": "",
+      "followStatus": "",
+      "inCall": "",
+      "micMuted": "",
+      "isSpeaking": ""
+    }
+  },
+  "commandPalette": {
+    "title": "",
+    "shortcuts": {
+      "select": "",
+      "confirm": "",
+      "close": ""
+    },
+    "recents": "",
+    "search": {
+      "placeholder": "",
+      "noMatch": ""
+    },
+    "itemNotAvailable": "",
+    "shortcutHint": ""
   }
 }

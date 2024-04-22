@@ -21,7 +21,9 @@
     "copyStyles": "Kopiuj style",
     "pasteStyles": "Wklej style",
     "stroke": "Kolor obramowania",
+    "changeStroke": "",
     "background": "Kolor wypełnienia",
+    "changeBackground": "",
     "fill": "Wypełnienie",
     "strokeWidth": "Grubość obramowania",
     "strokeStyle": "Styl obrysu",
@@ -38,12 +40,12 @@
     "arrowhead_none": "Brak",
     "arrowhead_arrow": "Strzałka",
     "arrowhead_bar": "Kreska",
-    "arrowhead_circle": "Okrąg",
-    "arrowhead_circle_outline": "Okrąg (obrys)",
+    "arrowhead_circle": "Koło",
+    "arrowhead_circle_outline": "Koło (puste)",
     "arrowhead_triangle": "Trójkąt",
-    "arrowhead_triangle_outline": "Trójkąt (obrys)",
+    "arrowhead_triangle_outline": "Trójkąt (pusty)",
     "arrowhead_diamond": "Romb",
-    "arrowhead_diamond_outline": "Romb (obrys)",
+    "arrowhead_diamond_outline": "Romb (pusty)",
     "fontSize": "Rozmiar tekstu",
     "fontFamily": "Krój pisma",
     "addWatermark": "Dodaj \"Zrobione w Excalidraw\"",
@@ -72,6 +74,7 @@
     "canvasColors": "Używane na płótnie",
     "canvasBackground": "Kolor dokumentu",
     "drawingCanvas": "Obszar roboczy",
+    "clearCanvas": "",
     "layers": "Warstwy",
     "actions": "Akcje",
     "language": "Język",
@@ -84,12 +87,13 @@
     "group": "Zgrupuj wybrane",
     "ungroup": "Rozgrupuj wybrane",
     "collaborators": "Współtwórcy",
-    "showGrid": "Pokaż siatkę",
+    "toggleGrid": "",
     "addToLibrary": "Dodaj do biblioteki",
     "removeFromLibrary": "Usuń z biblioteki",
     "libraryLoadingMessage": "Wczytywanie biblioteki…",
     "libraries": "Przeglądaj biblioteki",
     "loadingScene": "Wczytywanie sceny…",
+    "loadScene": "",
     "align": "Wyrównaj",
     "alignTop": "Wyrównaj do góry",
     "alignBottom": "Wyrównaj do dołu",
@@ -105,7 +109,8 @@
     "share": "Udostępnij",
     "showStroke": "Pokaż próbnik kolorów obrysu",
     "showBackground": "Pokaż próbnik koloru tła",
-    "toggleTheme": "Przełącz motyw",
+    "toggleTheme": "",
+    "theme": "",
     "personalLib": "Biblioteka prywatna",
     "excalidrawLib": "Biblioteka Excalidraw",
     "decreaseFontSize": "Zmniejsz rozmiar czcionki",
@@ -120,7 +125,7 @@
       "createEmbed": "Stwórz i osadź link",
       "label": "Łącze",
       "labelEmbed": "Podlinkuj i osadź",
-      "empty": "Nie ustawiono linku"
+      "empty": "Brakujący link"
     },
     "lineEditor": {
       "edit": "Edytuj linię",
@@ -137,8 +142,13 @@
     "selectAllElementsInFrame": "Zaznacz wszystkie elementy w ramce",
     "removeAllElementsFromFrame": "Usuń wszystkie elementy z ramki",
     "eyeDropper": "Wybierz kolor z płótna",
-    "textToDiagram": "Tekst do diagramu",
-    "prompt": ""
+    "textToDiagram": "Generuj diagram z opisu",
+    "prompt": "Opis",
+    "followUs": "Obserwuj nas",
+    "discordChat": "Czat Discorda",
+    "zoomToFitViewport": "",
+    "zoomToFitSelection": "",
+    "zoomToFit": ""
   },
   "library": {
     "noItems": "Nie dodano jeszcze żadnych elementów...",
@@ -171,6 +181,7 @@
     "fullScreen": "Pełny ekran",
     "darkMode": "Ciemny motyw",
     "lightMode": "Jasny motyw",
+    "systemMode": "",
     "zenMode": "Tryb Zen",
     "objectsSnapMode": "Przyciąganie do obiektów",
     "exitZenMode": "Wyjdź z trybu Zen",
@@ -212,9 +223,9 @@
     "fileTooBig": "Plik jest zbyt duży. Maksymalny dozwolony rozmiar to {{maxSize}}.",
     "svgImageInsertError": "Nie udało się wstawić obrazu SVG. Znacznik SVG wygląda na nieprawidłowy.",
     "failedToFetchImage": "Nie udało się załadować obrazu.",
-    "invalidSVGString": "Nieprawidłowy SVG.",
     "cannotResolveCollabServer": "Nie można połączyć się z serwerem współpracy w czasie rzeczywistym. Proszę odświeżyć stronę i spróbować ponownie.",
     "importLibraryError": "Wystąpił błąd w trakcie ładowania biblioteki",
+    "saveLibraryError": "Nie można zapisać biblioteki do pamięci. Proszę zapisać bibliotekę do pliku lokalnie, aby upewnić się, że nie stracisz zmian.",
     "collabSaveFailed": "Nie udało się zapisać w bazie danych. Jeśli problemy nie ustąpią, zapisz plik lokalnie, aby nie utracić swojej pracy.",
     "collabSaveFailed_sizeExceeded": "Nie udało się zapisać w bazie danych — dokument jest za duży. Zapisz plik lokalnie, aby nie utracić swojej pracy.",
     "imageToolNotSupported": "Dodawanie obrazów jest wyłączone.",
@@ -299,9 +310,12 @@
     "openIssueMessage": "Szanujemy twoją prywatność i raport nie zawierał żadnych danych dotyczących tego nad czym pracowałeś, natomiast jeżeli jesteś w stanie podzielić się tym nad czym pracowałeś, prosimy o dodatkowy raport poprzez <button>nasze narzędzie do raportowania błędów.</button> Prosimy o dołączenie poniższej informacji poprzez skopiowanie jej i umieszczenie jej w zgłoszeniu na portalu GitHub.",
     "sceneContent": "Zawartość dokumentu:"
   },
+  "shareDialog": {
+    "or": "Lub"
+  },
   "roomDialog": {
-    "desc_intro": "Będziesz w stanie pracować wraz z osobami które zaprosisz do współpracy.",
-    "desc_privacy": "By zapewnić Ci prywatność, sesja współpracy na żywo jest zabezpieczona szyfrowaniem end-to-end, co oznacza, że poza tobą i osobami z którymi podzielisz się linkiem, nikt nie ma dostępu do tego co będziecie tworzyć.",
+    "desc_intro": "Zaproś ludzi do wspólnego rysunku.",
+    "desc_privacy": "Nie martw się, sesja jest szyfrowana end-to-end i w pełni prywatna. Nawet nasz serwer nie widzi co rysujesz.",
     "button_startSession": "Rozpocznij sesję",
     "button_stopSession": "Zakończ sesję",
     "desc_inProgressIntro": "Sesja współpracy na żywo właśnie się rozpoczęła.",
@@ -521,5 +535,33 @@
     "description": "Obecnie wspierane są jedynie <flowchartLink>proste grafy</flowchartLink>, <sequenceLink>sekwencje</sequenceLink> i <classLink>diagramy klas</classLink>. Pozostałe typy będą wyświetlane jako obrazy w Excalidraw.",
     "syntax": "Składnia diagramów Mermaid",
     "preview": "Podgląd"
+  },
+  "userList": {
+    "search": {
+      "placeholder": "Szybkie wyszukiwanie",
+      "empty": "Nie znaleziono użytkowników"
+    },
+    "hint": {
+      "text": "Kliknij na użytkownika, aby obserwować",
+      "followStatus": "Obserwujesz tego użytkownika",
+      "inCall": "",
+      "micMuted": "",
+      "isSpeaking": ""
+    }
+  },
+  "commandPalette": {
+    "title": "",
+    "shortcuts": {
+      "select": "",
+      "confirm": "",
+      "close": ""
+    },
+    "recents": "",
+    "search": {
+      "placeholder": "",
+      "noMatch": ""
+    },
+    "itemNotAvailable": "",
+    "shortcutHint": ""
   }
 }
