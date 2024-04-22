@@ -1703,6 +1703,7 @@ class App extends React.Component<AppProps, AppState> {
                           }
                           scale={window.devicePixelRatio}
                           appState={this.state}
+                          device={this.device}
                           renderInteractiveSceneCallback={
                             this.renderInteractiveSceneCallback
                           }
@@ -4587,7 +4588,7 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   private getHitThreshold() {
-    return 10 / this.state.zoom.value;
+    return 8 / this.state.zoom.value;
   }
 
   private hitElement(
@@ -5326,24 +5327,41 @@ class App extends React.Component<AppProps, AppState> {
       !isOverScrollBar &&
       !this.state.editingLinearElement
     ) {
-      const elementWithTransformHandleType = getElementWithTransformHandleType(
-        elements,
-        this.state,
-        scenePointerX,
-        scenePointerY,
-        this.state.zoom,
-        event.pointerType,
-        this.scene.getNonDeletedElementsMap(),
-      );
-      if (
-        elementWithTransformHandleType &&
-        elementWithTransformHandleType.transformHandleType
-      ) {
-        setCursor(
-          this.interactiveCanvas,
-          getCursorForResizingElement(elementWithTransformHandleType),
+      // for linear elements, we'd like to prioritize point dragging over edge resizing
+      // therefore, we update and check hovered point index first
+      if (this.state.selectedLinearElement) {
+        this.handleHoverSelectedLinearElement(
+          this.state.selectedLinearElement,
+          scenePointerX,
+          scenePointerY,
         );
-        return;
+      }
+
+      if (
+        !this.state.selectedLinearElement ||
+        this.state.selectedLinearElement.hoverPointIndex === -1
+      ) {
+        const elementWithTransformHandleType =
+          getElementWithTransformHandleType(
+            elements,
+            this.state,
+            scenePointerX,
+            scenePointerY,
+            this.state.zoom,
+            event.pointerType,
+            this.scene.getNonDeletedElementsMap(),
+            this.device,
+          );
+        if (
+          elementWithTransformHandleType &&
+          elementWithTransformHandleType.transformHandleType
+        ) {
+          setCursor(
+            this.interactiveCanvas,
+            getCursorForResizingElement(elementWithTransformHandleType),
+          );
+          return;
+        }
       }
     } else if (selectedElements.length > 1 && !isOverScrollBar) {
       const transformHandleType = getTransformHandleTypeFromCoords(
@@ -5352,6 +5370,7 @@ class App extends React.Component<AppProps, AppState> {
         scenePointerY,
         this.state.zoom,
         event.pointerType,
+        this.device,
       );
       if (transformHandleType) {
         setCursor(
@@ -5601,7 +5620,7 @@ class App extends React.Component<AppProps, AppState> {
 
         if (hoverPointIndex >= 0 || segmentMidPointHoveredCoords) {
           setCursor(this.interactiveCanvas, CURSOR_TYPE.POINTER);
-        } else {
+        } else if (this.hitElement(scenePointerX, scenePointerY, element)) {
           setCursor(this.interactiveCanvas, CURSOR_TYPE.MOVE);
         }
       } else if (this.hitElement(scenePointerX, scenePointerY, element)) {
@@ -6301,7 +6320,14 @@ class App extends React.Component<AppProps, AppState> {
       const elementsMap = this.scene.getNonDeletedElementsMap();
       const selectedElements = this.scene.getSelectedElements(this.state);
 
-      if (selectedElements.length === 1 && !this.state.editingLinearElement) {
+      if (
+        selectedElements.length === 1 &&
+        !this.state.editingLinearElement &&
+        !(
+          this.state.selectedLinearElement &&
+          this.state.selectedLinearElement.hoverPointIndex !== -1
+        )
+      ) {
         const elementWithTransformHandleType =
           getElementWithTransformHandleType(
             elements,
@@ -6311,6 +6337,7 @@ class App extends React.Component<AppProps, AppState> {
             this.state.zoom,
             event.pointerType,
             this.scene.getNonDeletedElementsMap(),
+            this.device,
           );
         if (elementWithTransformHandleType != null) {
           this.setState({
@@ -6326,6 +6353,7 @@ class App extends React.Component<AppProps, AppState> {
           pointerDownState.origin.y,
           this.state.zoom,
           event.pointerType,
+          this.device,
         );
       }
       if (pointerDownState.resize.handleType) {

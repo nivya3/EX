@@ -120,7 +120,7 @@ describe("regression tests", () => {
     const firstRectPos = mouse.getPosition();
 
     UI.clickTool("rectangle");
-    mouse.down(10, -10);
+    mouse.down(12, -10);
     mouse.up(10, 10);
 
     const prevSelectedId = API.getSelectedElement().id;
@@ -174,10 +174,12 @@ describe("regression tests", () => {
     mouse.up(10, 10);
 
     const { x: prevX, y: prevY } = API.getSelectedElement();
+    API.clearSelection();
     mouse.down(-8, -8);
     mouse.up(10, 10);
 
     const { x: nextX, y: nextY } = API.getSelectedElement();
+    API.clearSelection();
     expect(nextX).toBeGreaterThan(prevX);
     expect(nextY).toBeGreaterThan(prevY);
 
@@ -199,7 +201,7 @@ describe("regression tests", () => {
     expect(
       h.elements.filter((element) => element.type === "rectangle").length,
     ).toBe(1);
-
+    API.clearSelection();
     Keyboard.withModifierKeys({ alt: true }, () => {
       mouse.down(-8, -8);
       mouse.up(10, 10);
@@ -255,7 +257,7 @@ describe("regression tests", () => {
       mouse.click(20, 0);
     });
 
-    mouse.down();
+    mouse.down(-5, 5);
     mouse.up(10, 10);
 
     h.elements
@@ -382,7 +384,7 @@ describe("regression tests", () => {
     const firstElementEndPoint = mouse.getPosition();
 
     UI.clickTool("rectangle");
-    mouse.down(10, -10);
+    mouse.down(12, -10);
     mouse.up(10, 10);
 
     const secondElementEndPoint = mouse.getPosition();
@@ -477,7 +479,7 @@ describe("regression tests", () => {
 
     Keyboard.withModifierKeys({ alt: true }, () => {
       mouse.restorePosition(...end);
-      mouse.down();
+      mouse.down(-25, -5);
       mouse.up(10, 10);
     });
 
@@ -725,7 +727,7 @@ describe("regression tests", () => {
     mouse.up(10, 10);
 
     const { x: prevX, y: prevY } = API.getSelectedElement();
-
+    API.clearSelection();
     // drag element from point on bounding box that doesn't hit element
     mouse.reset();
     mouse.down(8, 8);
@@ -999,12 +1001,12 @@ describe("regression tests", () => {
   it("shift click on selected element should deselect it on pointer up", () => {
     UI.clickTool("rectangle");
     mouse.down();
-    mouse.up(10, 10);
+    mouse.up(100, 100);
 
     // Rectangle is already selected since creating
     // it was our last action
     Keyboard.withModifierKeys({ shift: true }, () => {
-      mouse.down(-8, -8);
+      mouse.down(-50, -50);
     });
     expect(API.getSelectedElements().length).toBe(1);
 
@@ -1015,12 +1017,30 @@ describe("regression tests", () => {
   });
 
   it("single-clicking on a subgroup of a selected group should not alter selection", () => {
-    const rect1 = UI.createElement("rectangle", { x: 10 });
-    const rect2 = UI.createElement("rectangle", { x: 50 });
+    const rect1 = UI.createElement("rectangle", {
+      x: 10,
+      width: 20,
+      height: 20,
+    });
+    const rect2 = UI.createElement("rectangle", {
+      x: 50,
+      width: 20,
+      height: 20,
+    });
     UI.group([rect1, rect2]);
 
-    const rect3 = UI.createElement("rectangle", { x: 10, y: 50 });
-    const rect4 = UI.createElement("rectangle", { x: 50, y: 50 });
+    const rect3 = UI.createElement("rectangle", {
+      x: 10,
+      y: 50,
+      width: 20,
+      height: 20,
+    });
+    const rect4 = UI.createElement("rectangle", {
+      x: 50,
+      y: 50,
+      width: 20,
+      height: 20,
+    });
     UI.group([rect3, rect4]);
 
     Keyboard.withModifierKeys({ ctrl: true }, () => {
@@ -1064,8 +1084,9 @@ describe("regression tests", () => {
     UI.group([rect1, rect2]);
     assertSelectedElements(rect1, rect2);
 
+    mouse.reset();
     Keyboard.withModifierKeys({ ctrl: true }, () => {
-      mouse.clickOn(rect1);
+      mouse.click(10, 5);
     });
     assertSelectedElements(rect1);
 
@@ -1079,8 +1100,9 @@ describe("regression tests", () => {
     UI.group([rect1, rect3]);
     assertSelectedElements(rect1, rect2, rect3);
 
+    mouse.reset();
     Keyboard.withModifierKeys({ ctrl: true }, () => {
-      mouse.clickOn(rect1);
+      mouse.click(10, 5);
     });
     assertSelectedElements(rect1);
 
@@ -1162,7 +1184,7 @@ it(
     // Pointer down o first rectangle that is part of the group
     mouse.reset();
     Keyboard.withModifierKeys({ shift: true }, () => {
-      mouse.down();
+      mouse.down(100, 50);
     });
     expect(API.getSelectedElements().length).toBe(3);
     Keyboard.withModifierKeys({ shift: true }, () => {
